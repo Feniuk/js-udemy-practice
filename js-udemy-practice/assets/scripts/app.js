@@ -26,36 +26,51 @@ function writeObjectToLog(
   console.log(inputValues);
 }
 
-function add() {
+function calculateResult(calculationType) {
   const enteredNumber = getUserInput();
+  if (!enteredNumber) {
+    return;
+  }
   const initialResult = currentResult;
-  currentResult += enteredNumber;
-  outputInit("+", initialResult, enteredNumber);
-  writeObjectToLog("ADD", initialResult, enteredNumber, currentResult);
+  let mathOperator;
+  if (calculationType === "ADD") {
+    currentResult += enteredNumber;
+    mathOperator = "+";
+  } else if (calculationType === "SUBTRACT") {
+    currentResult -= enteredNumber;
+    mathOperator = "-";
+  } else if (calculationType === "MULTIPLY") {
+    currentResult *= enteredNumber;
+    mathOperator = "*";
+  } else if (calculationType === "DIVIDE") {
+    currentResult /= enteredNumber;
+    mathOperator = "/";
+  } else {
+    alert("Invalid element!");
+  }
+  outputInit(mathOperator, initialResult, enteredNumber);
+  writeObjectToLog(
+    calculationType,
+    initialResult,
+    enteredNumber,
+    currentResult,
+  );
+}
+
+function add() {
+  calculateResult("ADD");
 }
 
 function subtract() {
-  const enteredNumber = getUserInput();
-  const initialResult = currentResult;
-  currentResult -= enteredNumber;
-  outputInit("-", initialResult, enteredNumber);
-  writeObjectToLog("SUBTRACT", initialResult, enteredNumber, currentResult);
+  calculateResult("SUBTRACT");
 }
 
 function multiply() {
-  const enteredNumber = getUserInput();
-  const initialResult = currentResult;
-  currentResult *= enteredNumber;
-  outputInit("*", initialResult, enteredNumber);
-  writeObjectToLog("MULTIPLY", initialResult, enteredNumber, currentResult);
+  calculateResult("MULTIPLY");
 }
 
 function divide() {
-  const enteredNumber = getUserInput();
-  const initialResult = currentResult;
-  currentResult /= enteredNumber;
-  outputInit("/", initialResult, enteredNumber);
-  writeObjectToLog("DIVIDE", initialResult, enteredNumber, currentResult);
+  calculateResult("DIVIDE");
 }
 
 addBtn.addEventListener("click", add);
